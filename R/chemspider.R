@@ -83,3 +83,43 @@ csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
   smiles<- unlist(lapply(csid, fnx, token, ...))
   return(smiles)
 }
+
+
+#' Get extended information from Chemspider
+#' 
+#' Get extended info from Chemspider, see \url{http://www.chemspider.com/}
+#' @import httr XML
+#' @param csid character, CSID as returned by get_csid.
+#' @param token character; security token.
+#' @param verbose logical; should a verbose output be printed on the console?
+#' @param ... currently not used.
+#' @return a charater vector of class 'csid' with CSID.
+
+#' @note A security token is neeeded. Please register at RSC 
+#' \url{https://www.rsc.org/rsc-id/register} 
+#' for a security token.
+#' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
+#' @export
+#' @examples
+#' token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
+#' # convert CAS to CSID
+#' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1031-07-8")
+#' csid <- get_csid(casnr, token = token)
+#' # get SMILES from CSID
+#' csid_to_ext(csid, token)
+csid_to_ext <- function(csid, token, verbose = FALSE, ...){
+  fnx <- function(x, token, ...){
+    baseurl <- 'www.chemspider.com/MassSpecAPI.asmx/GetExtendedCompoundInfo?'
+    qurl <- paste0(baseurl, 'CSID=', x, '&token=', token)
+    if(verbose)
+      message(qurl)
+    tt <- GET(qurl)
+    ttt <- xmlTreeParse(tt)
+    # better use xpath and xmlParse
+    out <- xmlSApply(ttt$doc$children$ExtendedCompoundInfo, xmlValue)
+    Sys.sleep(0.1)
+    return(out)
+  }
+  out <- ldply(csid, fnx, token, verbose)
+  return(out)
+}

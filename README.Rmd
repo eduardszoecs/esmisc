@@ -48,8 +48,19 @@ csid_to_smiles(csid, token)
 
 
 
+# Retrieve additional infos
+### Chemspider
+```{r}
+csid_to_ext(csid, token)
+```
 
 
-NOTES
+### Molecular weight via cactus
+```{r}
+cactus(casnr, output = 'mw')
+```
+
+
+NOTE
 =============
-Chemspider needs a security token. Please register at...
+Chemspider needs a security token. Please register at RSC (https://www.rsc.org/rsc-id/register) for a security token.
