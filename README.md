@@ -38,17 +38,12 @@ Examples
 ```r
 require(esmisc)
 casnr <- c("107-06-2", "107-13-1", "319-84-6")
-cactus(casnr, output = 'mw', verbose = TRUE)
+cactus(casnr, output = 'smiles')
 ```
 
 ```
-## http://cactus.nci.nih.gov/chemical/structure/107-06-2/mw/xml
-## http://cactus.nci.nih.gov/chemical/structure/107-13-1/mw/xml
-## http://cactus.nci.nih.gov/chemical/structure/319-84-6/mw/xml
-```
-
-```
-## [1] "98.9596"  "53.0634"  "290.8314"
+## [1] "C(Cl)CCl"                       "C(C#N)=C"                      
+## [3] "C1(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C1Cl"
 ```
 
 ### Using Chemspider

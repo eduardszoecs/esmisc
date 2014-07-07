@@ -36,7 +36,7 @@ Examples
 ```{r}
 require(esmisc)
 casnr <- c("107-06-2", "107-13-1", "319-84-6")
-cactus(casnr, output = 'mw', verbose = TRUE)
+cactus(casnr, output = 'smiles')
 ```
 
 ### Using Chemspider
