@@ -66,4 +66,4 @@ csid_to_smiles(csid, token)
 
 NOTES
 =============
-
+Chemspider needs a security token. Please register at...
