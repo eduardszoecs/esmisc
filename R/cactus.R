@@ -8,7 +8,7 @@
 #' @param output character; what output should be returned ? Available options are 'smiles',
 #' 'iupac_name', 'mw' (molecular weight), see \url{http://cactus.nci.nih.gov/chemical/structure_documentation} for more options.
 #' @param verbose logical; should a verbose output be printed on the console?
-#' @param ... Other arguments past to \code{\link[plyr]{ldply}}.
+#' @param ... currently not used.
 #' @return A character vector.
 #' 
 #' @note If more than one hit is found, only the first is returned. A warinig is given.

@@ -6,6 +6,7 @@
 #' @param query charachter; search query (e.g. CAS numbers).
 #' @param token character; security token.
 #' @param verbose logical; should a verbose output be printed on the console?
+#' @param ... currently not used.
 #' @return a character vector of class 'csid' with CSID.
 #' 
 #' @note A security token is neeeded. Please register at RSC 
@@ -50,6 +51,7 @@ get_csid <- function(query, token, verbose = FALSE, ...){
 #' @param csid character, CSID as returned by get_csid.
 #' @param token character; security token.
 #' @param verbose logical; should a verbose output be printed on the console?
+#' @param ... currently not used.
 #' @return a charater vector of class 'csid' with CSID.
 
 #' @note A security token is neeeded. Please register at RSC 
@@ -62,7 +64,7 @@ get_csid <- function(query, token, verbose = FALSE, ...){
 #' # convert CAS to CSID
 #' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1031-07-8")
 #' csid <- get_csid(casnr, token = token)
-#' get SMILES from CSID
+#' # get SMILES from CSID
 #' csid_to_smiles(csid, token)
 csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
   fnx <- function(x, token, ...){

@@ -11,6 +11,8 @@ get_csid(query, token, verbose = FALSE, ...)
 \item{token}{character; security token.}
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
+
+\item{...}{currently not used.}
 }
 \value{
 a character vector of class 'csid' with CSID.

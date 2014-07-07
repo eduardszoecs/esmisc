@@ -11,6 +11,8 @@ csid_to_smiles(csid, token, verbose = FALSE, ...)
 \item{token}{character; security token.}
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
+
+\item{...}{currently not used.}
 }
 \value{
 a charater vector of class 'csid' with CSID.
@@ -28,7 +30,7 @@ token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 # convert CAS to CSID
 casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1031-07-8")
 csid <- get_csid(casnr, token = token)
-get SMILES from CSID
+# get SMILES from CSID
 csid_to_smiles(csid, token)
 }
 \author{

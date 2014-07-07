@@ -13,7 +13,7 @@ cactus(query, output = "smiles", verbose = FALSE, ...)
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
 
-\item{...}{Other arguments past to \code{\link[plyr]{ldply}}.}
+\item{...}{currently not used.}
 }
 \value{
 A character vector.
