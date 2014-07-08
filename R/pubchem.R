@@ -27,7 +27,7 @@ get_cid <- function(query, verbose = FALSE, ...){
     cid <- xpathSApply(xml_result, "//IdList/Id", xmlValue)
     # not found on ncbi
     if (length(cid) == 0){
-      message(verbose, "Not found. Return NA.")
+      message("Not found. Return NA.")
       cid <- NA
     }
     # more than one found on ncbi -> user input
@@ -112,7 +112,7 @@ cid_to_smiles <- function(cid, verbose = FALSE, ...){
 #' # get SMILES from CID
 #' cid_to_ext(cid)
 cid_to_ext <- function(cid, verbose = FALSE, ...){
-  fnx <- function(x, token, ...){
+  fnx <- function(x, ...){
     if(is.na(x))
       return(data.frame(iupac = NA, smiles = NA, mw = NA, mf = NA, InChIKey = NA))
     baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
@@ -127,10 +127,10 @@ cid_to_ext <- function(cid, verbose = FALSE, ...){
     mf <- xpathSApply(ttt, '//Item[@Name = "MolecularFormula"]', xmlValue)
     InChIKey <- xpathSApply(ttt, '//Item[@Name = "InChIKey"]', xmlValue)
     out <- data.frame(iupac, smiles, mw, mf, InChIKey)
-    Sys.sleep(0.1)
+    Sys.sleep(0.3)
     return(out)
   }
-  out <- ldply(cid, fnx, token, verbose)
+  out <- ldply(cid, fnx, verbose)
   return(out)
 }
 # cid_to_ext(cid)

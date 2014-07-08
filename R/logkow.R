@@ -1,7 +1,7 @@
 #' Retrieve KOW from CAS
 #' 
 #' Retrieve KOW from CAS via LOGKOW, see \url{http://logkow.cisti.nrc.ca/logkow/search.html}.
-#' @import httr XML
+#' @import httr XML RCurl
 #' 
 #' @param cas charachter; CAS numbers.
 #' @param verbose logical; should a verbose output be printed on the console?
@@ -38,8 +38,14 @@ get_kow <- function(cas, verbose = FALSE, ...){
     }
     kow <- xpathSApply(ttt, "//p", xmlValue)
     kow <- as.numeric(gsub('Recommended value: ', '', kow))
+    if(length(kow) == 0){
+      message('Not found! Returning NA.')
+      kow <- NA
+    }
+    Sys.sleep(0.33)
     return(kow)
   }
   kow <- unlist(lapply(cas, fun, verbose))
   return(kow)
 }
+
