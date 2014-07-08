@@ -114,7 +114,7 @@ cid_to_smiles <- function(cid, verbose = FALSE, ...){
 cid_to_ext <- function(cid, verbose = FALSE, ...){
   fnx <- function(x, token, ...){
     if(is.na(x))
-      return(NA)
+      return(data.frame(iupac = NA, smiles = NA, mw = NA, mf = NA, InChIKey = NA))
     baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
     qurl <- paste0(baseurl, '&ID=', x)
     if(verbose)
