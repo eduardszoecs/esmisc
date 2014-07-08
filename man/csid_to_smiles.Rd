@@ -28,7 +28,7 @@ for a security token.
 \examples{
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 # convert CAS to CSID
-casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1031-07-8")
+casnr <- c("107-06-2", "107-13-1", "319-86-8", "1031-07-8")
 csid <- get_csid(casnr, token = token)
 # get SMILES from CSID
 csid_to_smiles(csid, token)

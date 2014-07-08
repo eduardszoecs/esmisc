@@ -22,8 +22,8 @@ Retrieve KOW from CAS via LOGKOW, see \url{http://logkow.cisti.nrc.ca/logkow/sea
 If more then on match is found user is asked for input.
 }
 \examples{
-casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-get_kow(casnr)
+casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1918-16-7")
+get_kow(casnr, verbose = TRUE)
 }
 \author{
 Eduard Szoecs, \email{eduardszoecs@gmail.com}

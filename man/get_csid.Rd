@@ -29,7 +29,7 @@ If more then on match is found user is asked for input.
 }
 \examples{
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
-casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8", "1031-07-8")
+casnr <- c("107-06-2", "107-13-1", "319-86-8", "1031-07-8")
 get_csid(casnr, token = token)
 }
 \author{
