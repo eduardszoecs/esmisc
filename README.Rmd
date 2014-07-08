@@ -9,12 +9,16 @@ esmisc
 ### Functions
 Currently the following functions are available:
 
-+ Query [cactus](http://cactus.nci.nih.gov/chemical/structure_documentation) : `cactus()`
-+ Chemspider
-  + Query to ChemspiderID (CSID): `get_csid()`
-  + Convert CSID to SMILES : `csid_to_smiles()`
-
-
++ Web scraping
+  + Query [cactus](http://cactus.nci.nih.gov/chemical/structure_documentation) : `cactus()`
+  + [Chemspider](http://www.chemspider.com/)
+    + Query ChemspiderID (CSID): `get_csid()`
+    + Convert CSID to SMILES : `csid_to_smiles()`
+    + extended infos from CSID: `csid_to_ext()`
+  + [Pubchem](https://pubchem.ncbi.nlm.nih.gov/)
+    + Query CompoundID (CID): `get_cid()`
+    + Convert CID to SMILES: (`cid_to_smiles()`)
+    + extended infos from CID: `cid_to_ext()`
 
 Installation
 ==============
@@ -30,37 +34,52 @@ require(esmisc)
 Examples
 =================
 
-# Convert CAS to SMILES
-
-### Using Cactus
+## Convert CAS to SMILES
+### Via Cactus
 ```{r}
 require(esmisc)
-casnr <- c("107-06-2", "107-13-1", "319-84-6")
+casnr <- c("107-06-2", "107-13-1", "319-86-8")
 cactus(casnr, output = 'smiles')
 ```
 
-### Using Chemspider
+### Via Chemspider
 ```{r}
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 csid <- get_csid(casnr, token = token)
 csid_to_smiles(csid, token)
 ```
 
+### Via Pubchem
+```{r}
+cid <- get_cid(casnr)
+cid_to_smiles(cid)
+```
 
 
-# Retrieve additional infos
-### Chemspider
+
+## Retrieve additional infos
+### via Chemspider
 ```{r}
 csid_to_ext(csid, token)
 ```
-
 
 ### Molecular weight via cactus
 ```{r}
 cactus(casnr, output = 'mw')
 ```
 
+### Via Pubchem
+```{r}
+cid_to_ext(cid)
+```
+
+
 
 NOTE
 =============
 Chemspider needs a security token. Please register at RSC (https://www.rsc.org/rsc-id/register) for a security token.
+
+
+TODOS
+=============
++ Promp for user input when more then one hit is found

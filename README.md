@@ -9,12 +9,16 @@ esmisc
 ### Functions
 Currently the following functions are available:
 
-+ Query [cactus](http://cactus.nci.nih.gov/chemical/structure_documentation) : `cactus()`
-+ Chemspider
-  + Query to ChemspiderID (CSID): `get_csid()`
-  + Convert CSID to SMILES : `csid_to_smiles()`
-
-
++ Web scraping
+  + Query [cactus](http://cactus.nci.nih.gov/chemical/structure_documentation) : `cactus()`
+  + [Chemspider](http://www.chemspider.com/)
+    + Query ChemspiderID (CSID): `get_csid()`
+    + Convert CSID to SMILES : `csid_to_smiles()`
+    + extended infos from CSID: `csid_to_ext()`
+  + [Pubchem](https://pubchem.ncbi.nlm.nih.gov/)
+    + Query CompoundID (CID): `get_cid()`
+    + Convert CID to SMILES: (`cid_to_smiles()`)
+    + extended infos from CID: `cid_to_ext()`
 
 Installation
 ==============
@@ -31,13 +35,12 @@ require(esmisc)
 Examples
 =================
 
-# Convert CAS to SMILES
-
-### Using Cactus
+## Convert CAS to SMILES
+### Via Cactus
 
 ```r
 require(esmisc)
-casnr <- c("107-06-2", "107-13-1", "319-84-6")
+casnr <- c("107-06-2", "107-13-1", "319-86-8")
 cactus(casnr, output = 'smiles')
 ```
 
@@ -46,7 +49,7 @@ cactus(casnr, output = 'smiles')
 ## [3] "C1(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C1Cl"
 ```
 
-### Using Chemspider
+### Via Chemspider
 
 ```r
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
@@ -55,43 +58,54 @@ csid_to_smiles(csid, token)
 ```
 
 ```
-## [1] "C(CCl)Cl"                                                  
-## [2] "C=CC#N"                                                    
-## [3] "[C@@H]1([C@@H]([C@@H]([C@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl"
+## [1] "C(CCl)Cl"                                                   
+## [2] "C=CC#N"                                                     
+## [3] "[C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl"
+```
+
+### Via Pubchem
+
+```r
+cid <- get_cid(casnr)
+cid_to_smiles(cid)
+```
+
+```
+## [1] "C(CCl)Cl"                       "C=CC#N"                        
+## [3] "C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl"
 ```
 
 
 
-# Retrieve additional infos
-### Chemspider
+## Retrieve additional infos
+### via Chemspider
 
 ```r
 csid_to_ext(csid, token)
 ```
 
 ```
-##       CSID               MF
-## 1 13837650 C_{2}H_{4}Cl_{2}
-## 2     7567      C_{3}H_{3}N
-## 3 10468511 C_{6}H_{6}Cl_{6}
-##                                                       SMILES
-## 1                                                   C(CCl)Cl
-## 2                                                     C=CC#N
-## 3 [C@@H]1([C@@H]([C@@H]([C@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl
-##                                                                          InChI
-## 1                                              InChI=1/C2H4Cl2/c3-1-2-4/h1-2H2
-## 2                                               InChI=1/C3H3N/c1-2-3-4/h2H,1H2
-## 3 InChI=1/C6H6Cl6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-6H/t1-,2-,3-,4-,5+,6+/m1/s1
+##   .id     CSID               MF
+## 1 int 13837650 C_{2}H_{4}Cl_{2}
+## 2 int     7567      C_{3}H_{3}N
+## 3 int 10430682 C_{6}H_{6}Cl_{6}
+##                                                        SMILES
+## 1                                                    C(CCl)Cl
+## 2                                                      C=CC#N
+## 3 [C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl
+##                                                                    InChI
+## 1                                        InChI=1/C2H4Cl2/c3-1-2-4/h1-2H2
+## 2                                         InChI=1/C3H3N/c1-2-3-4/h2H,1H2
+## 3 InChI=1/C6H6Cl6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-6H/t1-,2-,3-,4+,5-,6-
 ##                    InChIKey AverageMass MolecularWeight MonoisotopicMass
 ## 1 WSLDOOZREJYCGB-UHFFFAOYAL     98.9592        98.95916        97.969009
 ## 2 NLHHRLWOUZZQLW-UHFFFAOYAG     53.0626        53.06262         53.02655
-## 3 JLYXXMFPNIAWKQ-SHFUYGGZBU    290.8298       290.82984       287.860077
+## 3 JLYXXMFPNIAWKQ-GPIVLXJGBO    290.8298       290.82984       287.860077
 ##   NominalMass ALogP XLogP                    CommonName
 ## 1          98     0     0            1,2-dichloroethane
 ## 2          53     0     0                 acrylonitrile
-## 3         288     0     0 l-alpha-Hexachlorocyclohexane
+## 3         288     0     0 .delta.-Hexachlorocyclohexane
 ```
-
 
 ### Molecular weight via cactus
 
@@ -103,7 +117,30 @@ cactus(casnr, output = 'mw')
 ## [1] "98.9596"  "53.0634"  "290.8314"
 ```
 
+### Via Pubchem
+
+```r
+cid_to_ext(cid)
+```
+
+```
+##                               iupac                         smiles
+## 1                1,2-dichloroethane                       C(CCl)Cl
+## 2                 prop-2-enenitrile                         C=CC#N
+## 3 1,2,3,4,5,6-hexachlorocyclohexane C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl
+##           mw      mf                    InChIKey
+## 1  98.959160 C2H4Cl2 WSLDOOZREJYCGB-UHFFFAOYSA-N
+## 2  53.062620   C3H3N NLHHRLWOUZZQLW-UHFFFAOYSA-N
+## 3 290.829840 C6H6Cl6 JLYXXMFPNIAWKQ-UHFFFAOYSA-N
+```
+
+
 
 NOTE
 =============
 Chemspider needs a security token. Please register at RSC (https://www.rsc.org/rsc-id/register) for a security token.
+
+
+TODOS
+=============
++ Promp for user input when more then one hit is found

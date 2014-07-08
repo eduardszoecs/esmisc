@@ -1,4 +1,4 @@
-#' Get CSID from chemspider
+#' Retrieve CSID from chemspider
 #' 
 #' Return ChemspiderId (CSID) for a search query, see \url{http://www.chemspider.com/}.
 #' @import httr XML
@@ -12,6 +12,8 @@
 #' @note A security token is neeeded. Please register at RSC 
 #' \url{https://www.rsc.org/rsc-id/register} 
 #' for a security token.
+#' 
+#' If more then on match is found user is asked for input.
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
 #' @export
 #' @examples
@@ -20,20 +22,34 @@
 #' get_csid(casnr, token = token)
 get_csid <- function(query, token, verbose = FALSE, ...){
   fnx <- function(x, token, ...){
-    baseurl <- 'www.chemspider.com/Search.asmx/SimpleSearch?'
+    baseurl <- 'http://www.chemspider.com/Search.asmx/SimpleSearch?'
     qurl <- paste0(baseurl, 'query=', x, '&token=', token)
     if(verbose)
-      message(qurl)
+      message(qurl, '\n')
     tt <- GET(qurl)
     ttt <- xmlTreeParse(tt)
-    csid <- xmlToList(ttt)$int
+    csid <- xmlSApply(ttt$doc$children$ArrayOfInt, xmlValue)
+    if(verbose)
+      message(csid, '\n')
     if(length(csid) == 0){
       message("CSID '", x, " not found!\n Returning NA!")
       out <- NA
     }
     if(length(csid) > 1){
-      message("More then one hit found!\n Returning first hit.")
-      csid <- csid[1]
+      message("More then one hit found for ", x, " ! \n 
+              Enter rownumber of CISD (other inputs will return 'NA'):\n")
+      print(data.frame(csid))
+      take <- scan(n = 1, quiet = TRUE, what = 'raw')
+      if(length(take) == 0)
+        csid <- NA
+      if(take %in% seq_len(length(csid))){
+        take <- as.numeric(take)
+        message("Input accepted, took CSID '", as.character(csid[take]), "'.\n")
+        csid <- as.character(csid[take])
+      } else {
+        csid <- NA
+        message(verbose, "\nReturned 'NA'!\n\n")
+      }
     }
     Sys.sleep(0.1)
     return(csid)
@@ -68,7 +84,7 @@ get_csid <- function(query, token, verbose = FALSE, ...){
 #' csid_to_smiles(csid, token)
 csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
   fnx <- function(x, token, ...){
-    baseurl <- 'www.chemspider.com/Search.asmx/GetCompoundInfo?'
+    baseurl <- 'http://www.chemspider.com/Search.asmx/GetCompoundInfo?'
     qurl <- paste0(baseurl, 'CSID=', x, '&token=', token)
     if(verbose)
       message(qurl)
@@ -81,6 +97,7 @@ csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
     return(smiles)
   }
   smiles<- unlist(lapply(csid, fnx, token, ...))
+  names(smiles) <- NULL
   return(smiles)
 }
 
@@ -108,8 +125,8 @@ csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
 #' # get SMILES from CSID
 #' csid_to_ext(csid, token)
 csid_to_ext <- function(csid, token, verbose = FALSE, ...){
-  fnx <- function(x, token, ...){
-    baseurl <- 'www.chemspider.com/MassSpecAPI.asmx/GetExtendedCompoundInfo?'
+  fnx <- function(x, token, verbose, ...){
+    baseurl <- 'http://www.chemspider.com/MassSpecAPI.asmx/GetExtendedCompoundInfo?'
     qurl <- paste0(baseurl, 'CSID=', x, '&token=', token)
     if(verbose)
       message(qurl)
