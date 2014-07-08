@@ -19,7 +19,7 @@ a charater vector.
 Convert CompoundID (CID) to SMILES, see \url{https://pubchem.ncbi.nlm.nih.gov/}
 }
 \examples{
-# convert CAS to CSID
+# convert CAS to CID
 casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
 cid <- get_cid(casnr)
 # get SMILES from CSID
