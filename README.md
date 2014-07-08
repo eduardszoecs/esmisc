@@ -9,7 +9,7 @@ esmisc
 ### Functions
 Currently the following functions are available:
 
-+ Web scraping
++ Web scraping Chemical Information
   + Query [cactus](http://cactus.nci.nih.gov/chemical/structure_documentation) : `cactus()`
   + [Chemspider](http://www.chemspider.com/)
     + Query ChemspiderID (CSID): `get_csid()`
@@ -17,8 +17,9 @@ Currently the following functions are available:
     + extended infos from CSID: `csid_to_ext()`
   + [Pubchem](https://pubchem.ncbi.nlm.nih.gov/)
     + Query CompoundID (CID): `get_cid()`
-    + Convert CID to SMILES: (`cid_to_smiles()`)
+    + Convert CID to SMILES: `cid_to_smiles()`
     + extended infos from CID: `cid_to_ext()`
+  + Extract recommended log KOW values from [LOGKOW](http://logkow.cisti.nrc.ca/logkow/index.jsp).
 
 Installation
 ==============
@@ -135,6 +136,16 @@ cid_to_ext(cid)
 ```
 
 
+## Retrieve log KOW values from LOGKOW
+
+```r
+get_kow(casnr)
+```
+
+```
+## [1] 1.48 0.25 4.14
+```
+
 
 NOTE
 =============
@@ -143,4 +154,5 @@ Chemspider needs a security token. Please register at RSC (https://www.rsc.org/r
 
 TODOS
 =============
-+ Promp for user input when more then one hit is found
++ Promp for user input when more then one hit is found. 
++ Better info for user prompt.
