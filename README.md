@@ -14,12 +14,12 @@ Currently the following functions are available:
   + [Chemspider](http://www.chemspider.com/)
     + Query ChemspiderID (CSID): `get_csid()`
     + Convert CSID to SMILES : `csid_to_smiles()`
-    + extended infos from CSID: `csid_to_ext()`
+    + retrieve additional infos from CSID: `csid_to_ext()`
   + [Pubchem](https://pubchem.ncbi.nlm.nih.gov/)
     + Query CompoundID (CID): `get_cid()`
     + Convert CID to SMILES: `cid_to_smiles()`
-    + extended infos from CID: `cid_to_ext()`
-  + Extract recommended log KOW values from [LOGKOW](http://logkow.cisti.nrc.ca/logkow/index.jsp).
+    + retrieve additional infos from CID: `cid_to_ext()`
+  + Retrieve recommended log KOW values from [LOGKOW](http://logkow.cisti.nrc.ca/logkow/index.jsp).
 
 Installation
 ==============
@@ -86,10 +86,10 @@ csid_to_ext(csid, token)
 ```
 
 ```
-##   .id     CSID               MF
-## 1 int 13837650 C_{2}H_{4}Cl_{2}
-## 2 int     7567      C_{3}H_{3}N
-## 3 int 10430682 C_{6}H_{6}Cl_{6}
+##       CSID               MF
+## 1 13837650 C_{2}H_{4}Cl_{2}
+## 2     7567      C_{3}H_{3}N
+## 3 10430682 C_{6}H_{6}Cl_{6}
 ##                                                        SMILES
 ## 1                                                    C(CCl)Cl
 ## 2                                                      C=CC#N
