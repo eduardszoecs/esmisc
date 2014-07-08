@@ -31,11 +31,11 @@ cactus <- function(query, output = 'smiles', verbose = FALSE, ...){
     #     print(h)
     out <- xpathSApply(h, "//data", xmlValue)
     if(length(out) == 0){
-      warning("Query '", x, " not found!\n Returning NA!")
+      message("Query '", x, " not found!\n Returning NA!")
       out <- NA
     }
     if(length(out) > 1){
-      warning("More then one hit found!\n Using first hit.")
+      message("More then one hit found!\n Using first hit.")
       out <- out[1]
     }
     Sys.sleep(0.3)

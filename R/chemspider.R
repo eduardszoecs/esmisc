@@ -28,11 +28,11 @@ get_csid <- function(query, token, verbose = FALSE, ...){
     ttt <- xmlTreeParse(tt)
     csid <- xmlToList(ttt)$int
     if(length(csid) == 0){
-      warning("CSID '", x, " not found!\n Returning NA!")
+      message("CSID '", x, " not found!\n Returning NA!")
       out <- NA
     }
     if(length(csid) > 1){
-      warning("More then one hit found!\n Returning first hit.")
+      message("More then one hit found!\n Returning first hit.")
       csid <- csid[1]
     }
     Sys.sleep(0.1)
