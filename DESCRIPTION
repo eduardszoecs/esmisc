@@ -12,4 +12,5 @@ LazyData: yes
 Imports:
     XML,
     plyr,
-    httr
+    httr,
+    RCurl
