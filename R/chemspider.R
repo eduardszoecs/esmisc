@@ -84,6 +84,8 @@ get_csid <- function(query, token, verbose = FALSE, ...){
 #' csid_to_smiles(csid, token)
 csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
   fnx <- function(x, token, ...){
+    if(is.na(x))
+      return(NA)
     baseurl <- 'http://www.chemspider.com/Search.asmx/GetCompoundInfo?'
     qurl <- paste0(baseurl, 'CSID=', x, '&token=', token)
     if(verbose)
@@ -126,6 +128,8 @@ csid_to_smiles <- function(csid, token, verbose = FALSE, ...){
 #' csid_to_ext(csid, token)
 csid_to_ext <- function(csid, token, verbose = FALSE, ...){
   fnx <- function(x, token, verbose, ...){
+    if(is.na(x))
+      return(NA)
     baseurl <- 'http://www.chemspider.com/MassSpecAPI.asmx/GetExtendedCompoundInfo?'
     qurl <- paste0(baseurl, 'CSID=', x, '&token=', token)
     if(verbose)

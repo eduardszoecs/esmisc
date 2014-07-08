@@ -75,6 +75,8 @@ get_cid <- function(query, verbose = FALSE, ...){
 #' cid_to_smiles(csid)
 cid_to_smiles <- function(cid, verbose = FALSE, ...){
   fnx <- function(x, ...){
+    if(is.na(x))
+      return(NA)
     baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
     qurl <- paste0(baseurl, '&ID=', x)
     if(verbose)
@@ -111,6 +113,8 @@ cid_to_smiles <- function(cid, verbose = FALSE, ...){
 #' cid_to_ext(cid)
 cid_to_ext <- function(cid, verbose = FALSE, ...){
   fnx <- function(x, token, ...){
+    if(is.na(x))
+      return(NA)
     baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
     qurl <- paste0(baseurl, '&ID=', x)
     if(verbose)
