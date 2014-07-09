@@ -126,7 +126,7 @@ cid_to_ext <- function(cid, verbose = FALSE, ...){
     mw <- xpathSApply(ttt, '//Item[@Name = "MolecularWeight"]', xmlValue)
     mf <- xpathSApply(ttt, '//Item[@Name = "MolecularFormula"]', xmlValue)
     InChIKey <- xpathSApply(ttt, '//Item[@Name = "InChIKey"]', xmlValue)
-    out <- data.frame(iupac, smiles, mw, mf, InChIKey)
+    out <- data.frame(iupac, smiles, mw, mf, InChIKey, stringsAsFactors = FALSE)
     Sys.sleep(0.3)
     return(out)
   }
