@@ -10,6 +10,9 @@ get_cid(query, verbose = FALSE, ask = TRUE, ...)
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
 
+\item{ask}{logical; ask for user input if multiple matches are found?
+If FALSE NA is returned in case of multiple matches.}
+
 \item{...}{currently not used.}
 }
 \value{

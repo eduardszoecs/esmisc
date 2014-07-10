@@ -3,7 +3,7 @@
 \alias{get_csid}
 \title{Retrieve CSID from chemspider}
 \usage{
-get_csid(query, token, verbose = FALSE, ...)
+get_csid(query, token, verbose = FALSE, ask = TRUE, ...)
 }
 \arguments{
 \item{query}{charachter; search query (e.g. CAS numbers).}
@@ -11,6 +11,9 @@ get_csid(query, token, verbose = FALSE, ...)
 \item{token}{character; security token.}
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
+
+\item{ask}{logical; ask for user input if multiple matches are found?
+If FALSE NA is returned in case of multiple matches.}
 
 \item{...}{currently not used.}
 }
