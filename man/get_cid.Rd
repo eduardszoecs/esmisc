@@ -3,7 +3,7 @@
 \alias{get_cid}
 \title{Retrieve CID from Pubchem}
 \usage{
-get_cid(query, verbose = FALSE, ...)
+get_cid(query, verbose = FALSE, ask = TRUE, ...)
 }
 \arguments{
 \item{query}{charachter; search query (e.g. CAS numbers).}

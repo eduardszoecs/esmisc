@@ -6,6 +6,8 @@
 #' @param query charachter; search query (e.g. CAS numbers).
 #' @param token character; security token.
 #' @param verbose logical; should a verbose output be printed on the console?
+#' @param ask logical; ask for user input if multiple matches are found? 
+#' If FALSE NA is returned in case of multiple matches.
 #' @param ... currently not used.
 #' @return a character vector of class 'csid' with CSID.
 #' 
@@ -20,7 +22,7 @@
 #' token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 #' casnr <- c("107-06-2", "107-13-1", "319-86-8", "1031-07-8")
 #' get_csid(casnr, token = token)
-get_csid <- function(query, token, verbose = FALSE, ...){
+get_csid <- function(query, token, verbose = FALSE, ask = TRUE, ...){
   fnx <- function(x, token, ...){
     baseurl <- 'http://www.chemspider.com/Search.asmx/SimpleSearch?'
     qurl <- paste0(baseurl, 'query=', x, '&token=', token)
@@ -36,19 +38,24 @@ get_csid <- function(query, token, verbose = FALSE, ...){
       out <- NA
     }
     if(length(csid) > 1){
-      message("More then one hit found for ", x, " ! \n 
-              Enter rownumber of CISD (other inputs will return 'NA'):\n")
-      print(data.frame(csid))
-      take <- scan(n = 1, quiet = TRUE, what = 'raw')
-      if(length(take) == 0)
-        csid <- NA
-      if(take %in% seq_len(length(csid))){
-        take <- as.numeric(take)
-        message("Input accepted, took CSID '", as.character(csid[take]), "'.\n")
-        csid <- as.character(csid[take])
+      if(ask){
+        message("More then one hit found for ", x, " ! \n 
+                Enter rownumber of CISD (other inputs will return 'NA'):\n")
+        print(data.frame(csid))
+        take <- scan(n = 1, quiet = TRUE, what = 'raw')
+        if(length(take) == 0)
+          csid <- NA
+        if(take %in% seq_len(length(csid))){
+          take <- as.numeric(take)
+          message("Input accepted, took CSID '", as.character(csid[take]), "'.\n")
+          csid <- as.character(csid[take])
+        } else {
+          csid <- NA
+          message(verbose, "\nReturned 'NA'!\n\n")
+        }
       } else {
-        csid <- NA
-        message(verbose, "\nReturned 'NA'!\n\n")
+        cid <- NA
+        message("Multiple matches. Returned NA!")
       }
     }
     Sys.sleep(0.1)

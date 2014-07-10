@@ -5,6 +5,8 @@
 #' 
 #' @param query charachter; search query (e.g. CAS numbers).
 #' @param verbose logical; should a verbose output be printed on the console?
+#' @param ask logical; ask for user input if multiple matches are found? 
+#' If FALSE NA is returned in case of multiple matches.
 #' @param ... currently not used.
 #' @return a character vector.
 #' 
@@ -16,7 +18,7 @@
 #' @examples
 #' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
 #' get_cid(casnr)
-get_cid <- function(query, verbose = FALSE, ...){
+get_cid <- function(query, verbose = FALSE, ask = TRUE, ...){
   fun <- function(name, verbose) {
     searchurl <- paste("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&term=",
                        name, sep = "")
@@ -32,19 +34,24 @@ get_cid <- function(query, verbose = FALSE, ...){
     }
     # more than one found on ncbi -> user input
     if(length(cid) > 1){
-      message("More then one hit found for ", name, " ! \n 
-              Enter rownumber of UID (other inputs will return 'NA'):\n")
-      print(data.frame(cid))
-      take <- scan(n = 1, quiet = TRUE, what = 'raw')
-      if(length(take) == 0)
-        cid <- NA
-      if(take %in% seq_len(length(cid))){
-        take <- as.numeric(take)
-        message("Input accepted, took UID '", as.character(cid[take]), "'.\n")
-        cid <- as.character(cid[take])
+      if(ask){
+        message("More then one hit found for ", name, " ! \n 
+                Enter rownumber of UID (other inputs will return 'NA'):\n")
+        print(data.frame(cid))
+        take <- scan(n = 1, quiet = TRUE, what = 'raw')
+        if(length(take) == 0)
+          cid <- NA
+        if(take %in% seq_len(length(cid))){
+          take <- as.numeric(take)
+          message("Input accepted, took UID '", as.character(cid[take]), "'.\n")
+          cid <- as.character(cid[take])
+        } else {
+          cid <- NA
+          message("\nReturned 'NA'!\n\n")
+        }
       } else {
         cid <- NA
-        message(verbose, "\nReturned 'NA'!\n\n")
+        message("Multiple matches. Returned NA!")
       }
     }
     return(cid)
