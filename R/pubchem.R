@@ -88,7 +88,7 @@ cid_to_smiles <- function(cid, verbose = FALSE, ...){
     qurl <- paste0(baseurl, '&ID=', x)
     if(verbose)
       message(qurl)
-    tt <- GET(qurl)
+    tt <- httpGET(qurl)
     ttt <- xmlParse(tt)
     # better use xpath and xmlParse
     smiles <- xpathSApply(ttt, '//Item[@Name = "CanonicalSmiles"]', xmlValue)
@@ -126,7 +126,7 @@ cid_to_ext <- function(cid, verbose = FALSE, ...){
     qurl <- paste0(baseurl, '&ID=', x)
     if(verbose)
       message(qurl)
-    tt <- GET(qurl)
+    tt <- httpGET(qurl)
     ttt <- xmlParse(tt)
     iupac <- xpathSApply(ttt, '//Item[@Name = "IUPACName"]', xmlValue)
     smiles <- xpathSApply(ttt, '//Item[@Name = "CanonicalSmiles"]', xmlValue)
