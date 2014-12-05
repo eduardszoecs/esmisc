@@ -4,6 +4,7 @@
 #' @import httr XML RCurl
 #' 
 #' @param  x character; The searchterm
+#' @param verbose logical; print message during processing to console?
 #' @return character; The CAS number. NA if the substance is not found.
 #' 
 #' @note If more than one reference is found on the first is taken.
@@ -12,8 +13,9 @@
 #' @examples
 #' etox_to_cas('2,4,5-Trichlorphenol')
 #' sapply(c('2,4,5-Trichlorphenol', '2,4-D', 'xxxxx'), etox_to_cas)
-etox_to_cas <- function(x){
-  message('Searching ', x)
+etox_to_cas <- function(x, verbose = TRUE){
+  if(verbose)
+    message('Searching ', x)
   # search
   baseurl <- 'http://webetox.uba.de/webETOX/public/search/stoff.do'
   out <- postForm(baseurl, .params = list('stoffname.selection[0].name' = x))
@@ -22,7 +24,8 @@ etox_to_cas <- function(x){
   tt <- htmlParse(out)
   subs <- xpathSApply(tt,"//*/table[@class = 'listForm']//a", xmlValue)
   if(is.null(subs)){
-    message('Substance not found! Returing NA. \n')
+    if(verbose)
+      message('Substance not found! Returing NA. \n')
     return(NA_character_)
   }
   links <- xpathSApply(tt,"//*/table[@class = 'listForm']//a//@href")
@@ -33,17 +36,20 @@ etox_to_cas <- function(x){
   # clean link
   id <- gsub('^.*\\?id=(.*)', '\\1', take_link)
   if(length(id) > 1){
-    message('More then one ID found. Returning first hit. \n')
+    if(verbose)
+      message('More then one ID found. Returning first hit. \n')
     id <- id[1]
   }
   Sys.sleep(0.01)
   
   # get additional information
   compurl <- paste0('http://webetox.uba.de/webETOX/public/basics/stoff.do?id=', id)
+  Sys.sleep(0.3)
   tt2 <- htmlParse(getURL(compurl))
   nodes <- getNodeSet(tt2, "//table[contains(.,'CAS')]")
   if(length(nodes) == 0){
-    message('No CAS found! Returing NA. \n')
+    if(verbose)
+      message('No CAS found! Returing NA. \n')
     return(NA_character_)
   }
   # get last table

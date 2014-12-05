@@ -3,10 +3,12 @@
 \alias{etox_to_cas}
 \title{Search for CAS numbers on ETOX}
 \usage{
-etox_to_cas(x)
+etox_to_cas(x, verbose = TRUE)
 }
 \arguments{
 \item{x}{character; The searchterm}
+
+\item{verbose}{logical; print message during processing to console?}
 }
 \value{
 character; The CAS number. NA if the substance is not found.
