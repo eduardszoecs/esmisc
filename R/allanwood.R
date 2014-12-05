@@ -4,6 +4,7 @@
 #' @import XML RCurl
 #' 
 #' @param  x character; A common name.
+#' @param verbose logical; print message during processing to console?
 #' @return character; The CAS number. NA if the substance is not found.
 #' 
 #' @note If more than one reference is found on the first is taken.
@@ -12,7 +13,7 @@
 #' @examples
 #' allanwood('Fluazinam')
 #' sapply(c('Fluazinam', 'Diclofop', 'xxxxx'), allanwood)
-allanwood <- function(x){
+allanwood <- function(x, verbose = TRUE){
   baseurl <- 'http://www.alanwood.net/pesticides/index_cn.html'
   ttt <- htmlParse(getURL(baseurl))
   names <- xpathSApply(ttt,"//a", xmlValue)
@@ -23,6 +24,9 @@ allanwood <- function(x){
     message('Not found! Returning NA.')
     return(c(CAS = NA_character_, activity = NA_character_))
   }
+  if(verbose)
+    message('Querying ', takelink)
+  Sys.sleep(0.3)
   ttt <- htmlParse(getURL(paste0('http://www.alanwood.net/pesticides/', takelink)))
   CAS <- xpathSApply(ttt, "//tr/th[@id='r5']/following-sibling::td", xmlValue)
   activity <- xpathSApply(ttt, "//tr/th[@id='r7']/following-sibling::td", xmlValue)

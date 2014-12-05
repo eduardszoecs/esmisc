@@ -3,10 +3,12 @@
 \alias{allanwood}
 \title{Query http://www.alanwood.net/pesticides}
 \usage{
-allanwood(x)
+allanwood(x, verbose = TRUE)
 }
 \arguments{
 \item{x}{character; A common name.}
+
+\item{verbose}{logical; print message during processing to console?}
 }
 \value{
 character; The CAS number. NA if the substance is not found.
