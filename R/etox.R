@@ -18,17 +18,17 @@ etox_to_cas <- function(x, verbose = TRUE){
     message('Searching ', x)
   # search
   baseurl <- 'http://webetox.uba.de/webETOX/public/search/stoff.do'
-  out <- postForm(baseurl, .params = list('stoffname.selection[0].name' = x))
+  out <- postForm(baseurl, .params = list('stoffname.selection[0].name' = x, event = 'Search'))
   
   # get substances and links
   tt <- htmlParse(out)
-  subs <- xpathSApply(tt,"//*/table[@class = 'listForm']//a", xmlValue)
+  subs <- xpathSApply(tt,"//*/table[@class = 'listForm resultList']//a", xmlValue)
   if(is.null(subs)){
     if(verbose)
       message('Substance not found! Returing NA. \n')
     return(NA_character_)
   }
-  links <- xpathSApply(tt,"//*/table[@class = 'listForm']//a//@href")
+  links <- xpathSApply(tt,"//*/table[@class = 'listForm resultList']//a//@href")
   # clean substances
   subs <- gsub('\\n|\\t| ', '', subs)
   take <- subs == x
