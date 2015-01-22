@@ -1,10 +1,4 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions.
-
 language: c
-# To build on OSX, switch the previous line to
-# language: objective-c
 script: ./travis-tool.sh run_tests
 before_script:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
@@ -14,8 +8,10 @@ before_script:
 # Configuration options below this line are suggested options.
 notifications:
   email:
-    on_success: szoecs@uni-landau.de
-    on_failure: szoecs@uni-landau.de
+    recipients:
+      - szoecs@uni-landau.de
+    on_success: never
+    on_failure: alway
 # One can also restrict the branches to test, see
 # http://about.travis-ci.org/docs/user/build-configuration/#Specify-branches-to-build
 branches:
