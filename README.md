@@ -18,6 +18,7 @@ Currently the following functions are available:
     + retrieve additional infos from CID: `cid_to_ext()`
   + [LOGKOW](http://logkow.cisti.nrc.ca/logkow/index.jsp)
     + Retrieve recommended log KOW values : `get_kow()`
+    + **Currently not available** [link](http://codata.ca/eng/resources/logkow.html)
   + [ETOX](http://webetox.uba.de/webETOX/index.do)
     + Convert names to CAS : `etox_to_cas()`
   + [Allan Wood](http://www.alanwood.net/pesticides/index.html)
@@ -64,25 +65,44 @@ cactus(casnr, output = 'smiles')
 ```r
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 csid <- get_csid(casnr, token = token)
+```
+
+```
+## Warning: internal error -3 in R_decompress1
+```
+
+```
+## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
+```
+
+```r
 csid_to_smiles(csid, token)
 ```
 
 ```
-## [1] "C(CCl)Cl"                                                   
-## [2] "C=CC#N"                                                     
-## [3] "[C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl"
+## Error in lapply(csid, fnx, token, ...): object 'csid' not found
 ```
 
 ###### Via Pubchem
 
 ```r
 cid <- get_cid(casnr)
+```
+
+```
+## Warning: internal error -3 in R_decompress1
+```
+
+```
+## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
+```
+
+```r
 cid_to_smiles(cid)
 ```
 
 ```
-## [1] "C(CCl)Cl"                       "C=CC#N"                        
-## [3] "C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl"
+## Error in lapply(cid, fnx, ...): object 'cid' not found
 ```
 
 
@@ -95,26 +115,7 @@ csid_to_ext(csid, token)
 ```
 
 ```
-##       CSID               MF
-## 1 13837650 C_{2}H_{4}Cl_{2}
-## 2     7567      C_{3}H_{3}N
-## 3 10430682 C_{6}H_{6}Cl_{6}
-##                                                        SMILES
-## 1                                                    C(CCl)Cl
-## 2                                                      C=CC#N
-## 3 [C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl
-##                                                                    InChI
-## 1                                        InChI=1/C2H4Cl2/c3-1-2-4/h1-2H2
-## 2                                         InChI=1/C3H3N/c1-2-3-4/h2H,1H2
-## 3 InChI=1/C6H6Cl6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-6H/t1-,2-,3-,4+,5-,6-
-##                    InChIKey AverageMass MolecularWeight MonoisotopicMass
-## 1 WSLDOOZREJYCGB-UHFFFAOYAL     98.9592        98.95916        97.969009
-## 2 NLHHRLWOUZZQLW-UHFFFAOYAG     53.0626         53.0626         53.02655
-## 3 JLYXXMFPNIAWKQ-GPIVLXJGBO    290.8298       290.82984       287.860077
-##   NominalMass ALogP XLogP                    CommonName
-## 1          98     0     0            1,2-dichloroethane
-## 2          53     0     0                 acrylonitrile
-## 3         288     0     0 .delta.-Hexachlorocyclohexane
+## Error in inherits(.data, "split"): object 'csid' not found
 ```
 
 ###### Molecular weight via cactus
@@ -134,39 +135,15 @@ cid_to_ext(cid)
 ```
 
 ```
-##                               iupac                         smiles
-## 1                1,2-dichloroethane                       C(CCl)Cl
-## 2                 prop-2-enenitrile                         C=CC#N
-## 3 1,2,3,4,5,6-hexachlorocyclohexane C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl
-##           mw      mf                    InChIKey
-## 1  98.959160 C2H4Cl2 WSLDOOZREJYCGB-UHFFFAOYSA-N
-## 2  53.062620   C3H3N NLHHRLWOUZZQLW-UHFFFAOYSA-N
-## 3 290.829840 C6H6Cl6 JLYXXMFPNIAWKQ-UHFFFAOYSA-N
+## Error in inherits(.data, "split"): object 'cid' not found
 ```
 
 ###### Retrieve log KOW values from LOGKOW
 
+**Currently not available!** [link](http://codata.ca/eng/resources/logkow.html)
+
 ```r
 get_kow(casnr)
-```
-
-```
-## Warning in FUN(c("107-06-2", "107-13-1", "319-86-8")[[3L]], ...): NAs
-## introduced by coercion
-```
-
-```
-## Warning in FUN(c("107-06-2", "107-13-1", "319-86-8")[[3L]], ...): NAs
-## introduced by coercion
-```
-
-```
-## Warning in FUN(c("107-06-2", "107-13-1", "319-86-8")[[3L]], ...): NAs
-## introduced by coercion
-```
-
-```
-##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
 ```
 
 
@@ -178,18 +155,22 @@ etox_to_cas('2,4,5-Trichlorphenol')
 ```
 
 ```
-## Searching 2,4,5-Trichlorphenol
-## More then one ID found. Returning first hit.
+## Warning: internal error -3 in R_decompress1
 ```
 
 ```
-## [1] "95-95-4"
+## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
 ```
 
 ###### CAS and pesticides groups from [Allan Wood](http://www.alanwood.net/pesticides/index.html)
 
 ```r
 sapply(c('Fluazinam', 'Diclofop'), allanwood)
+```
+
+```
+## Querying fluazinam.html
+## Querying diclofop.html
 ```
 
 ```
