@@ -65,44 +65,25 @@ cactus(casnr, output = 'smiles')
 ```r
 token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
 csid <- get_csid(casnr, token = token)
-```
-
-```
-## Warning: internal error -3 in R_decompress1
-```
-
-```
-## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
-```
-
-```r
 csid_to_smiles(csid, token)
 ```
 
 ```
-## Error in lapply(csid, fnx, token, ...): object 'csid' not found
+## [1] "C(CCl)Cl"                                                   
+## [2] "C=CC#N"                                                     
+## [3] "[C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl"
 ```
 
 ###### Via Pubchem
 
 ```r
 cid <- get_cid(casnr)
-```
-
-```
-## Warning: internal error -3 in R_decompress1
-```
-
-```
-## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
-```
-
-```r
 cid_to_smiles(cid)
 ```
 
 ```
-## Error in lapply(cid, fnx, ...): object 'cid' not found
+## [1] "C(CCl)Cl"                       "C=CC#N"                        
+## [3] "C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl"
 ```
 
 
@@ -115,7 +96,26 @@ csid_to_ext(csid, token)
 ```
 
 ```
-## Error in inherits(.data, "split"): object 'csid' not found
+##       CSID               MF
+## 1 13837650 C_{2}H_{4}Cl_{2}
+## 2     7567      C_{3}H_{3}N
+## 3 10430682 C_{6}H_{6}Cl_{6}
+##                                                        SMILES
+## 1                                                    C(CCl)Cl
+## 2                                                      C=CC#N
+## 3 [C@@H]1([C@@H]([C@@H]([C@@H]([C@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl
+##                                                                    InChI
+## 1                                        InChI=1/C2H4Cl2/c3-1-2-4/h1-2H2
+## 2                                         InChI=1/C3H3N/c1-2-3-4/h2H,1H2
+## 3 InChI=1/C6H6Cl6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-6H/t1-,2-,3-,4+,5-,6-
+##                    InChIKey AverageMass MolecularWeight MonoisotopicMass
+## 1 WSLDOOZREJYCGB-UHFFFAOYAL     98.9592         98.9592        97.969009
+## 2 NLHHRLWOUZZQLW-UHFFFAOYAG     53.0626         53.0626         53.02655
+## 3 JLYXXMFPNIAWKQ-GPIVLXJGBO    290.8298        290.8298       287.860077
+##   NominalMass ALogP XLogP                    CommonName
+## 1          98     0     0                dichloroethane
+## 2          53     0     0                 cyanoethylene
+## 3         288     0     0 .delta.-Hexachlorocyclohexane
 ```
 
 ###### Molecular weight via cactus
@@ -135,7 +135,14 @@ cid_to_ext(cid)
 ```
 
 ```
-## Error in inherits(.data, "split"): object 'cid' not found
+##                               iupac                         smiles
+## 1                1,2-dichloroethane                       C(CCl)Cl
+## 2                 prop-2-enenitrile                         C=CC#N
+## 3 1,2,3,4,5,6-hexachlorocyclohexane C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl
+##           mw      mf                    InChIKey
+## 1  98.959160 C2H4Cl2 WSLDOOZREJYCGB-UHFFFAOYSA-N
+## 2  53.062620   C3H3N NLHHRLWOUZZQLW-UHFFFAOYSA-N
+## 3 290.829840 C6H6Cl6 JLYXXMFPNIAWKQ-UHFFFAOYSA-N
 ```
 
 ###### Retrieve log KOW values from LOGKOW
@@ -155,11 +162,12 @@ etox_to_cas('2,4,5-Trichlorphenol')
 ```
 
 ```
-## Warning: internal error -3 in R_decompress1
+## Searching 2,4,5-Trichlorphenol
+## More then one ID found. Returning first hit.
 ```
 
 ```
-## Error in eval(expr, envir, enclos): lazy-load database '/home/edisz/R_libs/all/esmisc/R/esmisc.rdb' is corrupt
+## [1] "95-95-4"
 ```
 
 ###### CAS and pesticides groups from [Allan Wood](http://www.alanwood.net/pesticides/index.html)
