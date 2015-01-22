@@ -18,6 +18,7 @@ Currently the following functions are available:
     + retrieve additional infos from CID: `cid_to_ext()`
   + [LOGKOW](http://logkow.cisti.nrc.ca/logkow/index.jsp)
     + Retrieve recommended log KOW values : `get_kow()`
+    + **Currently not available** [link](http://codata.ca/eng/resources/logkow.html)
   + [ETOX](http://webetox.uba.de/webETOX/index.do)
     + Convert names to CAS : `etox_to_cas()`
   + [Allan Wood](http://www.alanwood.net/pesticides/index.html)
@@ -77,7 +78,9 @@ cid_to_ext(cid)
 ```
 
 ###### Retrieve log KOW values from LOGKOW
-```{r}
+
+**Currently not available!** [link](http://codata.ca/eng/resources/logkow.html)
+```{r, eval=FALSE}
 get_kow(casnr)
 ```
 
