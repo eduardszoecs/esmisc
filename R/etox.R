@@ -28,18 +28,13 @@ etox_to_cas <- function(x, verbose = TRUE){
       message('Substance not found! Returing NA. \n')
     return(NA_character_)
   }
-  links <- xpathSApply(tt,"//*/table[@class = 'listForm resultList']//a//@href")
-  # clean substances
-  subs <- gsub('\\n|\\t| ', '', subs)
-  take <- subs == x
-  take_link <- links[take]
-  # clean link
-  id <- gsub('^.*\\?id=(.*)', '\\1', take_link)
-  if(length(id) > 1){
-    if(verbose)
-      message('More then one ID found. Returning first hit. \n')
-    id <- id[1]
+  link <- unique(xpathSApply(tt, "//*/table[@class = 'listForm resultList']//a//@href"))
+  if (length(link) > 1) {
+    if (verbose) 
+      message("More then one Link found. Returning first hit. \n")
+    link <- link[1]
   }
+  id <- gsub('^.*\\?id=(.*)', '\\1', link)
   Sys.sleep(0.01)
   
   # get additional information
