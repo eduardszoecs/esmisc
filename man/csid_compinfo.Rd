@@ -19,7 +19,7 @@ csid_compinfo(csid, token, verbose = TRUE, ...)
 a list of four, with entries: CSID (ChemSpider ID), InChI, InChIKey and SMILES string.
 }
 \description{
-Convert ChemspiderId (CSID) to SMILES, see \url{http://www.chemspider.com/}
+Get record details from ChemspiderId (CSID), see \url{http://www.chemspider.com/}
 }
 \note{
 A security token is neeeded. Please register at RSC
@@ -31,7 +31,6 @@ for a security token.
 token <- '<YOUR-SECURITY-TOKEN>'
 # convert CAS to CSID
 csid <- get_csid("Triclosan", token = token)
-# get SMILES from CSID
 csid_compinfo(csid, token)
 # multiple inpits
 csids <- get_csid("3380-34-5", token = token)
