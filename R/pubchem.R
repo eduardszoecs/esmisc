@@ -1,143 +1,128 @@
-#' Retrieve CID from Pubchem
+#' Retrieve Pubchem Id (CID)
 #' 
 #' Return CompoundID (CID) for a search query, see \url{https://pubchem.ncbi.nlm.nih.gov/}.
-#' @import httr XML RCurl
+#' @import XML RCurl
 #' 
-#' @param query charachter; search query (e.g. CAS numbers).
+#' @param query charachter; search term.
+#' @param first logical; If TRUE return only first result.
 #' @param verbose logical; should a verbose output be printed on the console?
-#' @param ask logical; ask for user input if multiple matches are found? 
-#' If FALSE NA is returned in case of multiple matches.
 #' @param ... currently not used.
 #' @return a character vector.
-#' 
-#' @note 
-#' If more then on match is found user is asked for input.
 #' 
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
 #' @export
 #' @examples
-#' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-#' get_cid(casnr)
-get_cid <- function(query, verbose = FALSE, ask = TRUE, ...){
-  fun <- function(name, verbose) {
-    searchurl <- paste("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&term=",
-                       name, sep = "")
-    if(verbose)
-      print(searchurl)
-    xml_result <- xmlParse(getURL(searchurl))
-    Sys.sleep(0.33)
-    cid <- xpathSApply(xml_result, "//IdList/Id", xmlValue)
-    # not found on ncbi
-    if (length(cid) == 0){
-      message("Not found. Return NA.")
-      cid <- NA
-    }
-    # more than one found on ncbi -> user input
-    if(length(cid) > 1){
-      if(ask){
-        message("More then one hit found for ", name, " ! \n 
-                Enter rownumber of UID (other inputs will return 'NA'):\n")
-        print(data.frame(cid))
-        take <- scan(n = 1, quiet = TRUE, what = 'raw')
-        if(length(take) == 0)
-          cid <- NA
-        if(take %in% seq_len(length(cid))){
-          take <- as.numeric(take)
-          message("Input accepted, took UID '", as.character(cid[take]), "'.\n")
-          cid <- as.character(cid[take])
-        } else {
-          cid <- NA
-          message("\nReturned 'NA'!\n\n")
-        }
-      } else {
-        cid <- NA
-        message("Multiple matches. Returned NA!")
-      }
-    }
-    return(cid)
+#' get_cid('Triclosan')
+get_cid <- function(query, first = FALSE, verbose = FALSE, ...){
+  if(length(query) > 1){
+    stop('Cannot handle multiple input strings.')
   }
-  cid <- unlist(lapply(query, fun, verbose))
-  return(cid)
+  qurl <- paste("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&term=",
+                     query, sep = "")
+  if(verbose)
+    print(qurl)
+  Sys.sleep(0.3)
+  h <- try(xmlParse(qurl, isURL = TRUE, useInternalNodes = TRUE))
+  if(!inherits(h, "try-error")){
+    out <- xpathSApply(h, "//IdList/Id", xmlValue)
+  } else{
+    warning('Problem with web service encountered... Returning NA.')
+    out < NA
+  }
+  # not found on ncbi
+  if (length(out) == 0){
+    message("Not found. Return NA.")
+    out <- NA
+  }
+  if(first)
+    out <- out[1]
+  names(out) <- NULL
+  class(out) <- 'cid'
+  return(out)
 }
-# casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-# cid <- get_cid(casnr)
+
 
 
 #' Convert CID to SMILES
 #' 
 #' Convert CompoundID (CID) to SMILES, see \url{https://pubchem.ncbi.nlm.nih.gov/}
-#' @import httr XML
-#' @param cid character, CID as returned by get_cid.
+#' @import RCurl XML
+#' @param cid character; Pubchem ID (CID).
+#' @param first logical; return only first list items? 
+#' That is: a list with entries of lenght 1 (for easy conversion in a data.frame)
 #' @param verbose logical; should a verbose output be printed on the console?
 #' @param ... currently not used.
-#' @return a charater vector.
-
+#' @return a list with entries: CID (Pubchem ID), InChIKey, InChI,
+#' synonyms, IUPACName, Canonical SMILES, Isomeric SMILES, MolecularFormula,
+#' MolecularWeight, TotalFormalCharge, XlogP, HydrogenBondDonorCount,
+#' HydrogenBondAcceptorCount, Complexity,  HeavyAtomCount, AtomChiralCount,
+#' AtomChiralDefCount, AtomChiralUndefCount, BondChiralCount, BondChiralDefCount,
+#' BondChiralUndefCount, IsotopeAtomCount, CovalentUnitCount, TautomerCount
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
 #' @export
 #' @examples
-#' # convert CAS to CID
-#' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-#' cid <- get_cid(casnr)
-#' # get SMILES from CID
-#' cid_to_smiles(cid)
-cid_to_smiles <- function(cid, verbose = FALSE, ...){
-  fnx <- function(x, ...){
-    if(is.na(x))
-      return(NA)
-    baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
-    qurl <- paste0(baseurl, '&ID=', x)
-    if(verbose)
-      message(qurl)
-    tt <- httpGET(qurl)
-    ttt <- xmlParse(tt)
-    # better use xpath and xmlParse
-    smiles <- xpathSApply(ttt, '//Item[@Name = "CanonicalSmiles"]', xmlValue)
-    Sys.sleep(0.3)
-    return(smiles)
+#' \dontrun{
+#' cid <- get_cid('Triclosan')
+#' cid_compinfo(cid[1])
+#' }
+cid_compinfo <- function(cid, first = FALSE, verbose = FALSE, ...){
+  if(length(cid) > 1){
+    stop('Cannot handle multiple input strings.')
   }
-  smiles<- unlist(lapply(cid, fnx, ...))
-  return(smiles)
-}
-# cid_to_smiles(cid)
-
-
-#' Get extended information from Pubchem
-#' 
-#' Get extended info from pubchem, see \url{https://pubchem.ncbi.nlm.nih.gov/}
-#' @import httr XML
-#' @param cid character, CID as returned by get_cid.
-#' @param verbose logical; should a verbose output be printed on the console?
-#' @param ... currently not used.
-#' @return a charater vector
-#' 
-#' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
-#' @export
-#' @examples
-#' # convert CAS to CID
-#' casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-#' cid <- get_cid(casnr)
-#' # get SMILES from CID
-#' cid_to_ext(cid)
-cid_to_ext <- function(cid, verbose = FALSE, ...){
-  fnx <- function(x, ...){
-    if(is.na(x))
-      return(data.frame(iupac = NA, smiles = NA, mw = NA, mf = NA, InChIKey = NA))
-    baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
-    qurl <- paste0(baseurl, '&ID=', x)
-    if(verbose)
-      message(qurl)
-    tt <- httpGET(qurl)
-    ttt <- xmlParse(tt)
-    iupac <- xpathSApply(ttt, '//Item[@Name = "IUPACName"]', xmlValue)
-    smiles <- xpathSApply(ttt, '//Item[@Name = "CanonicalSmiles"]', xmlValue)
-    mw <- xpathSApply(ttt, '//Item[@Name = "MolecularWeight"]', xmlValue)
-    mf <- xpathSApply(ttt, '//Item[@Name = "MolecularFormula"]', xmlValue)
-    InChIKey <- xpathSApply(ttt, '//Item[@Name = "InChIKey"]', xmlValue)
-    out <- data.frame(iupac, smiles, mw, mf, InChIKey, stringsAsFactors = FALSE)
-    Sys.sleep(0.3)
-    return(out)
+  baseurl <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pccompound"
+  qurl <- paste0(baseurl, '&ID=', cid)
+  if(verbose)
+    message(qurl)
+  Sys.sleep(0.3)
+  h <- try(xmlParse(qurl, isURL = TRUE))
+  if(!inherits(h, "try-error")){
+    CID <- xpathSApply(h, '//Id', xmlValue)
+    InChIKey <-  xpathSApply(h, "//Item[@Name='InChIKey']", xmlValue)
+    InChI <- xpathSApply(h, "//Item[@Name='InChI']", xmlValue)
+    synonyms <- xpathSApply(h, "//Item[@Name='SynonymList']/Item", xmlValue)
+    IUPACName <- xpathSApply(h, "//Item[@Name='IUPACName']", xmlValue)
+    CanonicalSmiles <- xpathSApply(h, "//Item[@Name='CanonicalSmiles']", xmlValue)
+    IsomericSmiles <- xpathSApply(h, "//Item[@Name='IsomericSmiles']", xmlValue)
+    RotatableBondCount <- xpathSApply(h, "//Item[@Name='RotatableBondCount']", xmlValue)
+    MolecularFormula <- xpathSApply(h, "//Item[@Name='MolecularFormula']", xmlValue)
+    MolecularWeight <- xpathSApply(h, "//Item[@Name='MolecularWeight']", xmlValue)
+    TotalFormalCharge <- xpathSApply(h, "//Item[@Name='TotalFormalCharge']", xmlValue)
+    XLogP <- xpathSApply(h, "//Item[@Name='XLogP']", xmlValue)
+    HydrogenBondDonorCount <- xpathSApply(h, "//Item[@Name='HydrogenBondDonorCount']", xmlValue)
+    HydrogenBondAcceptorCount <- xpathSApply(h, "//Item[@Name='HydrogenBondAcceptorCount']", xmlValue)
+    Complexity <- xpathSApply(h, "//Item[@Name='Complexity']", xmlValue)
+    HeavyAtomCount <- xpathSApply(h, "//Item[@Name='HeavyAtomCount']", xmlValue)
+    AtomChiralCount <- xpathSApply(h, "//Item[@Name='AtomChiralCount']", xmlValue)
+    AtomChiralDefCount <- xpathSApply(h, "//Item[@Name='AtomChiralDefCount']", xmlValue)
+    AtomChiralUndefCount <- xpathSApply(h, "//Item[@Name='AtomChiralUndefCount']", xmlValue)
+    BondChiralCount <- xpathSApply(h, "//Item[@Name='BondChiralCount']", xmlValue)
+    BondChiralDefCount <- xpathSApply(h, "//Item[@Name='BondChiralDefCount']", xmlValue)
+    BondChiralUndefCount <- xpathSApply(h, "//Item[@Name='BondChiralUndefCount']", xmlValue)
+    IsotopeAtomCount <- xpathSApply(h, "//Item[@Name='IsotopeAtomCount']", xmlValue)
+    CovalentUnitCount <- xpathSApply(h, "//Item[@Name='CovalentUnitCount']", xmlValue)
+    TautomerCount <- xpathSApply(h, "//Item[@Name='TautomerCount']", xmlValue)
+    out <- list(CID = CID, InChIKey = InChIKey, InChI = InChI, synonyms = synonyms,
+                IUPACName = IUPACName, CanonicalSmiles = CanonicalSmiles, 
+                IsomericSmiles = IsomericSmiles, RotatableBondCount = RotatableBondCount,
+                MolecularFormula = MolecularFormula, MolecularWeight = MolecularWeight,
+                TotalFormalCharge = TotalFormalCharge, XLogP = XLogP, 
+                HydrogenBondDonorCount = HydrogenBondDonorCount, 
+                HydrogenBondAcceptorCount = HydrogenBondAcceptorCount,
+                Complexity = Complexity, HeavyAtomCount = HeavyAtomCount,
+                AtomChiralCount = AtomChiralCount, AtomChiralDefCount = AtomChiralDefCount,
+                AtomChiralUndefCount = AtomChiralUndefCount, BondChiralCount = BondChiralCount,
+                BondChiralDefCount = BondChiralDefCount, BondChiralUndefCount = BondChiralUndefCount,
+                IsotopeAtomCount = IsotopeAtomCount, CovalentUnitCount = CovalentUnitCount,
+                TautomerCount = TautomerCount)
+    if(first)
+      out <-lapply(out, function(x) x[1])
+  } else{
+    warning('Problem with web service encountered... Returning NA.')
+    out < NA
   }
-  out <- ldply(cid, fnx, verbose)
   return(out)
 }
-# cid_to_ext(cid)
+
+
+
+

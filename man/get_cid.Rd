@@ -2,17 +2,16 @@
 % Please edit documentation in R/pubchem.R
 \name{get_cid}
 \alias{get_cid}
-\title{Retrieve CID from Pubchem}
+\title{Retrieve Pubchem Id (CID)}
 \usage{
-get_cid(query, verbose = FALSE, ask = TRUE, ...)
+get_cid(query, first = FALSE, verbose = FALSE, ...)
 }
 \arguments{
-\item{query}{charachter; search query (e.g. CAS numbers).}
+\item{query}{charachter; search term.}
+
+\item{first}{logical; If TRUE return only first result.}
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
-
-\item{ask}{logical; ask for user input if multiple matches are found?
-If FALSE NA is returned in case of multiple matches.}
 
 \item{...}{currently not used.}
 }
@@ -22,12 +21,8 @@ a character vector.
 \description{
 Return CompoundID (CID) for a search query, see \url{https://pubchem.ncbi.nlm.nih.gov/}.
 }
-\note{
-If more then on match is found user is asked for input.
-}
 \examples{
-casnr <- c("107-06-2", "107-13-1", "319-84-6", "319-86-8")
-get_cid(casnr)
+get_cid('Triclosan')
 }
 \author{
 Eduard Szoecs, \email{eduardszoecs@gmail.com}
