@@ -31,7 +31,7 @@ get_cid <- function(query, first = FALSE, verbose = FALSE, ...){
   }
   # not found on ncbi
   if (length(out) == 0){
-    message("Not found. Return NA.")
+    message("Not found. Returning NA.")
     out <- NA
   }
   if(first)
@@ -59,6 +59,7 @@ get_cid <- function(query, first = FALSE, verbose = FALSE, ...){
 #' AtomChiralDefCount, AtomChiralUndefCount, BondChiralCount, BondChiralDefCount,
 #' BondChiralUndefCount, IsotopeAtomCount, CovalentUnitCount, TautomerCount
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
+#' @seealso \code{\link{get_cid}} to retrieve Pubchem IDs.
 #' @export
 #' @examples
 #' \dontrun{
@@ -119,6 +120,10 @@ cid_compinfo <- function(cid, first = FALSE, verbose = FALSE, ...){
   } else{
     warning('Problem with web service encountered... Returning NA.')
     out < NA
+  }
+  if (length(out) == 0){
+    message("Not found. Returning NA.")
+    out <- NA
   }
   return(out)
 }

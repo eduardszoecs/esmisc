@@ -36,4 +36,7 @@ cid_compinfo(cid[1])
 \author{
 Eduard Szoecs, \email{eduardszoecs@gmail.com}
 }
+\seealso{
+\code{\link{get_cid}} to retrieve Pubchem IDs.
+}
 

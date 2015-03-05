@@ -44,7 +44,7 @@ sapply(c('Aspirin', 'Triclosan'), get_csid, token = token)
 Eduard Szoecs, \email{eduardszoecs@gmail.com}
 }
 \seealso{
-\code{\link{csid_compinfo}} and \code{\link{csid_ext compinfo}} to
+\code{\link{csid_compinfo}} and \code{\link{csid_extcompinfo}} to
 retrieve compound details from csid.
 }
 

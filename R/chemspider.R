@@ -15,7 +15,7 @@
 #' for a security token.
 #' 
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
-#' @seealso \code{\link{csid_compinfo}} and \code{\link{csid_ext compinfo}} to 
+#' @seealso \code{\link{csid_compinfo}} and \code{\link{csid_extcompinfo}} to 
 #' retrieve compound details from csid.
 #' @export
 #' @examples
@@ -100,6 +100,10 @@ csid_compinfo <- function(csid, token, verbose = TRUE, ...){
     warning('Problem with web service encountered... Returning NA.')
     out < NA
   }
+  if (length(out) == 0){
+    message("Not found. Returning NA.")
+    out <- NA
+  }
   return(out)
 }
 
@@ -148,6 +152,10 @@ csid_extcompinfo <- function(csid, token, verbose = TRUE, ...){
     out <- unlist(xmlToList(h))
   } else{
     warning('Problem with web service encountered... Returning NA.')
+    out <- NA
+  }
+  if (length(out) == 0){
+    message("Not found. Returning NA.")
     out <- NA
   }
   return(out)

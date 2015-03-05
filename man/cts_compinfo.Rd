@@ -21,8 +21,9 @@ Get record details from CTS, see \url{http://cts.fiehnlab.ucdavis.edu}
 }
 \examples{
 \dontrun{
-# omit synonyms and external links from output
-cts_compinfo("DNYVWBJVOYZRCX-RNGZQALNSA-N")[1:5]
+out <- cts_compinfo("DNYVWBJVOYZRCX-RNGZQALNSA-N")
+str(out)
+out[1:5]
 }
 }
 \author{
