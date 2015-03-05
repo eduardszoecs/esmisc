@@ -2,41 +2,49 @@
 % Please edit documentation in R/chemspider.R
 \name{get_csid}
 \alias{get_csid}
-\title{Retrieve CSID from chemspider}
+\title{Retrieve ChemSpider ID}
 \usage{
-get_csid(query, token, verbose = FALSE, ask = TRUE, ...)
+get_csid(query, token = NULL, first = FALSE, verbose = TRUE, ...)
 }
 \arguments{
-\item{query}{charachter; search query (e.g. CAS numbers).}
+\item{query}{charachter; search term.}
 
-\item{token}{character; security token.}
+\item{token}{character; your security token.}
+
+\item{first}{logical; If TRUE return only first result.}
 
 \item{verbose}{logical; should a verbose output be printed on the console?}
-
-\item{ask}{logical; ask for user input if multiple matches are found?
-If FALSE NA is returned in case of multiple matches.}
 
 \item{...}{currently not used.}
 }
 \value{
-a character vector of class 'csid' with CSID.
+a character vector of class 'csid' with ChemSpider IDs.
 }
 \description{
-Return ChemspiderId (CSID) for a search query, see \url{http://www.chemspider.com/}.
+Return Chemspider ID (CSID) for a search query, see \url{http://www.chemspider.com/}.
 }
 \note{
 A security token is neeeded. Please register at RSC
 \url{https://www.rsc.org/rsc-id/register}
 for a security token.
-
-If more then on match is found user is asked for input.
 }
 \examples{
-token <- '37bf5e57-9091-42f5-9274-650a64398aaf'
-casnr <- c("107-06-2", "107-13-1", "319-86-8", "1031-07-8")
-get_csid(casnr, token = token)
+\dontrun{
+token <- '<YOUR-SECURITY-TOKEN>'
+get_csid("Triclosan", token = token)
+# [1] "5363"
+# attr(,"class")
+# [1] "csid"
+get_csid("3380-34-5", token = token)
+# multiple inputs
+sapply(c('Aspirin', 'Triclosan'), get_csid, token = token)
+}
 }
 \author{
 Eduard Szoecs, \email{eduardszoecs@gmail.com}
+}
+\seealso{
+\code{\link{csid_compinfo}} and \code{\link{csid_ext compinfo}} to
+retrieve compound details from csid.
 }
 

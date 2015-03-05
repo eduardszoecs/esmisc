@@ -1,5 +1,4 @@
 #' Query Chemical Identifier Resolver
-#' 
 #' @import XML plyr RCurl
 #' 
 #' @param identifier character; chemical identifier.
@@ -8,11 +7,10 @@
 #' @param resolver character; what resolver should be used? If NULL (default) 
 #'  the identifier type is detected and the different resolvers are used in turn. 
 #'  See details for possible resolvers.
-#' @paraam first. If TRUE return only first results.
+#' @param first logical; If TRUE return only first result.
 #' @param verbose logical; should a verbose output be printed on the console?
 #' @param ... currently not used.
 #' @return A character vector.
-#' 
 #' @details A interface to the Chemical Identifier Resolver (CIR). 
 #'  (\url{http://cactus.nci.nih.gov/chemical/structure_documentation}).
 #'  
@@ -47,7 +45,7 @@
 #'      \item \code{'effective_rotor_count'} (Number of Effectively Rotatable Bonds),
 #'      \item \code{'ring_count'} (Number of Rings),
 #'      \item \code{'ringsys_count'} (Number of Ring Systems),
-#'      \item \code{'xlogp2'} (octanol−water partition coefficient),
+#'      \item \code{'xlogp2'} (octanol-water partition coefficient),
 #'      \item \code{'aromatic'} (is the compound aromatic),
 #'      \item \code{'macrocyclic'} (is the compound macrocyclic),
 #'      \item \code{'heteroatom_count'} (heteroatom count),
@@ -105,9 +103,9 @@
 #' 
 #' @export
 cir_query <- function(identifier, representation = 'smiles', resolver = NULL, 
-                      first = FALSE, verbose = FALSE, ...){
+                      first = FALSE, verbose = TRUE, ...){
   if(length(identifier) > 1){
-    stop('cir_query() cannot handle multiple input strings.')
+    stop('Cannot handle multiple input strings.')
   }
   baseurl <- "http://cactus.nci.nih.gov/chemical/structure"
   qurl <- paste(baseurl, identifier, representation, 'xml', sep = '/')
