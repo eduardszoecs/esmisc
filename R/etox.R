@@ -11,8 +11,10 @@
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
 #' @export
 #' @examples
+#' \dontrun{
 #' etox_to_cas('2,4,5-Trichlorphenol')
 #' sapply(c('2,4,5-Trichlorphenol', '2,4-D', 'xxxxx'), etox_to_cas)
+#' }
 etox_to_cas <- function(x, verbose = TRUE){
   # TODO preprocess input with regex (e.g. strip ending 'e', or 
   # add dash to 3,4Dichloroaniline (3,4-Dichloroaniline))

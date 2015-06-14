@@ -11,8 +11,10 @@
 #' @author Eduard Szoecs, \email{eduardszoecs@@gmail.com}
 #' @export
 #' @examples
+#' \dontrun{
 #' allanwood('Fluazinam')
 #' sapply(c('Fluazinam', 'Diclofop', 'xxxxx'), allanwood)
+#' }
 allanwood <- function(x, verbose = TRUE){
   baseurl <- 'http://www.alanwood.net/pesticides/index_cn.html'
   ttt <- htmlParse(getURL(baseurl))
