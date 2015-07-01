@@ -27,6 +27,8 @@ These function have been moved to the [webchem-package](https://github.com/ropen
     + Query CompoundID (CID): `get_cid()`
     + Convert CID to SMILES: `cid_to_smiles()`
     + retrieve additional infos from CID: `cid_to_ext()`
+  + [allanwood](http://www.alanwood.net/pesticides/)
+    + Query CAS and pesticides groups: `allanwood()`
     
     
 
@@ -58,10 +60,7 @@ get_kow(casnr)
 etox_to_cas('2,4,5-Trichlorphenol')
 ```
 
-### CAS and pesticides groups from [Allan Wood](http://www.alanwood.net/pesticides/index.html)
-```{r}
-sapply(c('Fluazinam', 'Diclofop'), allanwood)
-```
+
 
 
 

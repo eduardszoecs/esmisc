@@ -21,8 +21,10 @@ Search for CAS numbers on ETOX (https://webetox.uba.de/webETOX/index.do)
 If more than one reference is found on the first is taken.
 }
 \examples{
+\dontrun{
 etox_to_cas('2,4,5-Trichlorphenol')
 sapply(c('2,4,5-Trichlorphenol', '2,4-D', 'xxxxx'), etox_to_cas)
+}
 }
 \author{
 Eduard Szoecs, \email{eduardszoecs@gmail.com}

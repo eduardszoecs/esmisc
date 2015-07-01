@@ -4,7 +4,7 @@
 \alias{read_regnie}
 \title{Read DWD REGNIE gridded data into R}
 \usage{
-read_regnie(file, crs = NULL, usegdal = TRUE)
+read_regnie(file, crs = NULL, usegdal = FALSE)
 }
 \arguments{
 \item{file}{path to gzip archive}
@@ -25,13 +25,15 @@ This functions reads DWD gridded data (currently only tested with REGNIE).
 gdalwarp (faster, but needs gdal on the path).
 A description of the data can be found here:
 \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/REGNIE_Beschreibung.pdf}.
+Data is available here: \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
 }
 \examples{
 \dontrun{
 # using projectRaster takes few seconds
+# Read daily precipitation on 24.12.2014.
 r <- read_regnie(system.file("extdata", "ra141224.gz", package = "esmisc"),
    crs = CRS('+init=epsg:31467'), usegdal = FALSE)
-plot(r)
+
 }
 }
 
