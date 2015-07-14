@@ -52,7 +52,7 @@ etox_to_cas <- function(x, verbose = TRUE){
     return(NA_character_)
   }
   # get last table
-  tab <- readHTMLTable(nodes[length(nodes)][[1]])
+  tab <- readHTMLTable(nodes[length(nodes)][[1]], header = FALSE)
   names(tab) <- c('value', 'type')
   CAS <- as.character(tab[tab$type == 'CAS', 'value'])
   return(CAS)
