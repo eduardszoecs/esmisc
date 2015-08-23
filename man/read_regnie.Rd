@@ -4,36 +4,22 @@
 \alias{read_regnie}
 \title{Read DWD REGNIE gridded data into R}
 \usage{
-read_regnie(file, crs = NULL, usegdal = FALSE)
+read_regnie(file)
 }
 \arguments{
-\item{file}{path to gzip archive}
-
-\item{crs}{reproject raster to specified CRS?
-character or object of class 'CRS'. PROJ.4 description of the coordinate reference system.
-If NULL the returned raster is longlat.}
-
-\item{usegdal}{Use gdal to reproject raster? If \code{FALSE} \code{\link[raster]{projectRaster}} is used.
-If \code{TRUE} gdalwarp is needed in path.}
+\item{file}{path to gz archive}
 }
 \value{
-A projected \code{RasterLayer} object.
+A \code{RasterLayer} object.
 }
 \description{
 This functions reads DWD gridded data (currently only tested with REGNIE).
- Moreover, it reprojects the raster either using \code{\link[raster]{projectRaster}} or
-gdalwarp (faster, but needs gdal on the path).
 A description of the data can be found here:
 \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/REGNIE_Beschreibung.pdf}.
 Data is available here: \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
 }
 \examples{
-\dontrun{
-# using projectRaster takes few seconds
 # Read daily precipitation on 24.12.2014.
-r <- read_regnie(system.file("extdata", "ra141224.gz", package = "esmisc"),
-   crs = CRS('+init=epsg:31467'), usegdal = FALSE)
-
-}
+r <- read_regnie(system.file("extdata", "ra141224.gz", package = "esmisc"))
 }
 
