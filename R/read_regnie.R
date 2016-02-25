@@ -1,6 +1,6 @@
 #' Read DWD REGNIE gridded data into R
 #' 
-#' @description This functions reads DWD gridded data (currently only tested with REGNIE).
+#' @description This functions reads DWD REGNIE data.
 #' A description of the data can be found here:
 #' \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/REGNIE_Beschreibung.pdf}.
 #' Data is available here: \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
