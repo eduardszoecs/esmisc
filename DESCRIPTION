@@ -1,8 +1,8 @@
 Package: esmisc
 Type: Package
 Title: Misc Functions
-Version: 0.0.1
-Date: 2015-06-06
+Version: 0.0.2
+Date: 2016-09-16
 Author: Eduard Szoecs
 Maintainer: Eduard Szoecs <eduardszoecs@gmail.com>
 Description: Misc functions programmed by Eduard Szöcs.
@@ -14,5 +14,6 @@ Imports:
     XML,
     httr,
     RCurl,
-    raster
+    raster,
+    ggplot2
 RoxygenNote: 5.0.1

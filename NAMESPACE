@@ -2,7 +2,9 @@
 
 export(get_kow)
 export(read_regnie)
+export(theme_edi)
 import(RCurl)
 import(XML)
+import(ggplot2)
 import(httr)
 import(raster)

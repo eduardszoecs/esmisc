@@ -1,3 +1,8 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
 esmisc
 ============
 [![Build Status](https://travis-ci.org/EDiLD/esmisc.png)](https://travis-ci.org/EDiLD/esmisc)
@@ -11,6 +16,7 @@ Currently the following functions are available:
     + Retrieve recommended log KOW values : `get_kow()`
     + **Service currently not available :** [link](http://codata.ca/eng/resources/logkow.html)
   + `read_regnie()` reads DWD REGNIE data into R.
+  + `theme_edi()` is a custom ggplot2 theme that I use.
     
 #### Defunct
 These functions have been moved to the [webchem-package](https://github.com/ropensci/webchem) and are no longer available in `esmisc`:
@@ -44,7 +50,7 @@ library(esmisc)
 
 
 ## Examples
-```{r}
+```{r load}
 library(esmisc)
 ```
 
@@ -63,3 +69,13 @@ require(raster)
 plot(r, main = 'Precipitation on 24.12.2014')
 ```
 
+### ggplot2 theme
+
+```{r ggplot_themes}
+library(ggplot2)
+p <- ggplot(mtcars) + 
+  geom_point(aes(x = wt, y = mpg, colour=factor(gear))) + 
+  facet_wrap(~am) + 
+  theme_edi()
+p
+````
