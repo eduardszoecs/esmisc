@@ -1,7 +1,7 @@
 Package: esmisc
 Type: Package
 Title: Misc Functions
-Version: 0.0.2
+Version: 0.0.2.9001
 Date: 2016-09-16
 Author: Eduard Szoecs
 Maintainer: Eduard Szoecs <eduardszoecs@gmail.com>
