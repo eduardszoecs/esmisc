@@ -71,8 +71,12 @@ theme_edi <- function(base_size = 14, base_family = "Helvetica") {
         strip.switch.pad.grid = unit(0.1, "cm"), 
         strip.switch.pad.wrap = unit(0.1, "cm"), 
         plot.background = element_rect(colour = "white"), 
-        plot.title = element_text(size = rel(1.2), 
+        plot.title = element_text(size = rel(1.2), hjust = 0, vjust = 1, 
                                   margin = margin(b = half_line * 1.2)), 
+        plot.subtitle = element_text(size = rel(0.9), hjust = 0, vjust = 1, 
+                                     margin = margin(b = half_line * 0.9)), 
+        plot.caption = element_text(size = rel(0.9), hjust = 1, 
+                                    vjust = 1, margin = margin(t = half_line * 0.9)),
         plot.margin = margin(half_line, half_line, half_line, half_line), 
         complete = TRUE
         )
