@@ -5,7 +5,7 @@ Version: 0.0.3
 Date: 2016-09-16
 Authors@R: c(person("Eduard", "Szöcs", role = c("aut", "cre"),
     email = "eduardszoecs@gmail.com"))
-Maintainer: Eduard Szoecs <eduardszoecs@gmail.com>
+Maintainer: Eduard Szöcs <eduardszoecs@gmail.com>
 Description: Misc functions programmed by Eduard Szöcs. 
     Provides read_regnie() to read gridded precipitation data from German Weather 
     Service (DWD).
