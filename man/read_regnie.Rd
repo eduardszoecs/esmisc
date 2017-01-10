@@ -14,9 +14,9 @@ A \code{RasterLayer} object.
 }
 \description{
 This functions reads DWD REGNIE data.
-A description of the data can be found here:
-\url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/REGNIE_Beschreibung.pdf}.
-Data is available here: \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
+A description of the data can be found here (pdf-format):
+\url{https://www.dwd.de/DE/leistungen/regnie/download/regnie_beschreibung_pdf.pdf?__blob=publicationFile&v=2}.
+Data is available here: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
 }
 \examples{
 # Read daily precipitation on 20.01.2005.
