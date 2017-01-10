@@ -6,10 +6,13 @@ NEW FEATURES
 
 
 MINOR IMPROVEMENTS
+* read_regnie() is now faster (4.5x), thanks to readr
+* minor tweaks to theme_edi()
 
 
 BUG FIXES
 * updated theme_edi to new ggplot2 version
+* read_regnie() failed if files contained precipitation > 100mm (fixes issue #1)
 
 DEPRECATED FUNCTIONS
 

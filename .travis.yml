@@ -1,40 +1,36 @@
-## Sample .travis.yml file for use with metacran/r-builder
-## See https://github.com/metacran/r-builder for detail
-language: c
-sudo: required
+language: r
+sudo: false
+cache: packages
 
-before_install:
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
+r:
+  - devel
+  - release
 
-install:
-  - ./pkg-build.sh install_deps
+env:
+  global:
+    - _R_CRAN_CHECK_INCOMING_=false
 
-script:
-  - ./pkg-build.sh run_tests
 
-# print timings (of examples) and sysinfo
-after_script:
-  - ./pkg-build.sh dump_logs_by_extension "timings"
-  - ./pkg-build.sh dump_sysinfo
+r_check_args: "--no-build-vignettes --no-manual --timings --as-cran"
+warnings_are_errors: false
+r_check_revdep: false
 
-after_failure:
-  - ./pkg-build.sh dump_logs
 
+r_packages:
+  - devtools
+
+r_github_packages:
+  - jimhester/covr
+
+# report to codecov
+after_success:
+  - Rscript -e 'covr::codecov(quiet = FALSE)'
+
+# report to maintainer
 notifications:
   email:
     recipients:
-    - szoecs@uni-landau.de
-    on_success: never
-    on_failure: always
+    - eduardszoecs@gmail.com
+    on_success: change
+    on_failure: change
 
-env:
-  matrix:
-    - RVERSION=release
-    - RVERSION=devel COVERAGE=true
-
-  global:
-    - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings --as-cran --run-donttest"
-    - _R_CHECK_TIMINGS_="0"
- 

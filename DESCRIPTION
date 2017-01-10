@@ -1,19 +1,28 @@
 Package: esmisc
 Type: Package
-Title: Misc Functions
-Version: 0.0.2.9001
+Title: Misc Functions of Eduard Szöcs
+Version: 0.0.2.9002
 Date: 2016-09-16
-Author: Eduard Szoecs
+Authors@R: c(person("Eduard", "Szöcs", role = c("aut", "cre"),
+    email = "eduardszoecs@gmail.com"))
 Maintainer: Eduard Szoecs <eduardszoecs@gmail.com>
-Description: Misc functions programmed by Eduard Szöcs.
-License: GPL (>= 3)
+Description: Misc functions programmed by Eduard Szöcs. 
+    Provides read_regnie() to read gridded precipitation data from German Weather 
+    Service (DWD).
+License: MIT + file LICENSE
+URL: https://github.com/EDiLD/esmisc
+BugReports: https://github.com/EDiLD/esmisc/issues
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
+Depends:
+    R (>= 3.1.0)
 Imports:
     XML,
     httr,
     RCurl,
     raster,
     ggplot2
+Suggests:
+    testthat
 RoxygenNote: 5.0.1
