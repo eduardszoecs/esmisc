@@ -1,3 +1,7 @@
+---
+output: 
+  md_document
+---
 esmisc
 ============
 [![Build Status](https://travis-ci.org/EDiLD/esmisc.png)](https://travis-ci.org/EDiLD/esmisc)
