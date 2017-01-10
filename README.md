@@ -1,6 +1,12 @@
 esmisc
 ============
 [![Build Status](https://travis-ci.org/EDiLD/esmisc.png)](https://travis-ci.org/EDiLD/esmisc)
+[![Build status](https://ci.appveyor.com/api/projects/status/ju4fwso1luyanrn6?svg=true)](https://ci.appveyor.com/project/EDiLD/esmisc-98v1t)
+[![Coverage Status](https://codecov.io/github/edild/esmisc/coverage.svg)](https://codecov.io/gh/EDiLD/esmisc)
+[![Open Issues](https://img.shields.io/github/issues/edild/esmisc.svg)](https://github.com/edild/esmisc/issues)
+[![Downloads](http://cranlogs.r-pkg.org/badges/esmisc)](http://cranlogs.r-pkg.org/badges/esmisc)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/esmisc)](http://cran.r-project.org/web/packages/esmisc)
+
 
 `esmisc` is a R package containing misc functions of Eduard Szöcs.
 
@@ -33,10 +39,10 @@ library(esmisc)
 
 
 ```r
-r <- read_regnie(system.file('extdata', 'ra141224.gz', package = 'esmisc'))
+r <- read_regnie(system.file("extdata", "ra050120.gz", package = "esmisc"))
 # plot the raster
 require(raster)
-plot(r, main = 'Precipitation on 24.12.2014')
+plot(r, main = 'Precipitation on 20.01.2005')
 ```
 
 ![](README_files/figure-html/read_regnie-1.png)<!-- -->

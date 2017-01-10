@@ -4,3 +4,5 @@ README.Rmd
 README.md
 README.html
 .travis.yml
+appveyor.yml
+README_files*

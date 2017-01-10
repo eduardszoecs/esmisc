@@ -19,7 +19,7 @@ A description of the data can be found here:
 Data is available here: \url{ftp://ftp.dwd.de/pub/CDC/grids_germany/daily/regnie/}.
 }
 \examples{
-# Read daily precipitation on 24.12.2014.
+# Read daily precipitation on 20.01.2005.
 r <- read_regnie(system.file("extdata", "ra050120.gz", package = "esmisc"))
 }
 

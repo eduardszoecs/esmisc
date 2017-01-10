@@ -18,11 +18,9 @@ LazyData: yes
 Depends:
     R (>= 3.1.0)
 Imports:
-    XML,
-    httr,
-    RCurl,
     raster,
-    ggplot2
+    ggplot2,
+    readr
 Suggests:
     testthat
 RoxygenNote: 5.0.1

@@ -9,7 +9,7 @@
 #' @return A \code{RasterLayer} object.
 #' @export
 #' @examples
-#' # Read daily precipitation on 24.12.2014.
+#' # Read daily precipitation on 20.01.2005.
 #' r <- read_regnie(system.file("extdata", "ra050120.gz", package = "esmisc"))
 read_regnie <- function(file){
   cont <- read_fwf(file, 
