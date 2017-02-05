@@ -4,7 +4,8 @@ esmisc 0.0.4
 
 NEW FEATURES
 
-* added function for geometric mean
+* added geomean() for geometric mean
+* added numextractall() to extract numeric values from a string
 
 MINOR IMPROVEMENTS
 
