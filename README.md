@@ -55,3 +55,15 @@ Examples
     p
 
 ![](README_files/figure-markdown_strict/ggplot_themes-1.png)
+
+### other functions
+
+#### Geometric mean
+
+    mean(c(1, 10, 100))
+
+    ## [1] 37
+
+    geomean(c(1, 10, 100))
+
+    ## [1] 10

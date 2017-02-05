@@ -22,4 +22,3 @@ colour=factor(gear))) + facet_wrap(~am)
 p
 p + theme_edi()
 }
-

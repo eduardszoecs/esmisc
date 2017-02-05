@@ -55,4 +55,13 @@ p <- ggplot(mtcars) +
   facet_wrap(~am) + 
   theme_edi()
 p
-````
+```
+
+### other functions
+
+#### Geometric mean
+```{r}
+mean(c(1, 10, 100))
+geomean(c(1, 10, 100))
+```
+

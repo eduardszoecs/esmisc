@@ -22,4 +22,3 @@ Data is available here: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/re
 # Read daily precipitation on 20.01.2005.
 r <- read_regnie(system.file("extdata", "ra050120.gz", package = "esmisc"))
 }
-
