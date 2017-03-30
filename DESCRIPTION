@@ -2,7 +2,7 @@ Package: esmisc
 Type: Package
 Title: Misc Functions of Eduard Szöcs
 Version: 0.0.3.9002
-Date: 2017-01-10
+Date: 2017-03-30
 Authors@R: c(person("Eduard", "Szöcs", role = c("aut", "cre"),
     email = "eduardszoecs@gmail.com"))
 Maintainer: Eduard Szöcs <eduardszoecs@gmail.com>

@@ -11,6 +11,8 @@ MINOR IMPROVEMENTS
 
 BUG FIXES
 
+* read_regnie() gave wrong extent (reported by Tim Haering).
+
 DEPRECATED FUNCTIONS
 
 DEFUNCT FUNCTIONS
