@@ -11,6 +11,12 @@
 #' @examples
 #' # Read daily precipitation on 20.01.2005.
 #' r <- read_regnie(system.file("extdata", "ra050120.gz", package = "esmisc"))
+#' extent(r)
+#' 
+#' # convert xyz data.frame
+#' r_xyz <- as.data.frame(r, xy = TRUE)
+#' head(r_xyz)
+#' head(na.omit(r_xyz))
 read_regnie <- function(file){
   cont <- read_fwf(file, 
                    col_positions = fwf_widths(rep(4, 611)), 
